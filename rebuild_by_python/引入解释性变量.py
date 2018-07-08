@@ -5,16 +5,21 @@ class Product(object):
 		self.quantity = quantity
 		self.itemPrice = itemPrice
 	
-	def getPrice(self):
-		basePrice = self.quantity * self.itemPrice
-		quantityDiscount = max(0, self.quantity - 500) * self.itemPrice *0.05
-		shipping = min(basePrice * 0.1, 100)
-		return basePrice + quantityDiscount + shipping
+	def getBasePrice(self):
+		return self.quantity * self.itemPrice
+	
+	def getQuantityDiscount(self):
+		return max(0, self.quantity - 500) * self.itemPrice *0.05
 
+	def getShipping(self):
+		return min(self.getBasePrice() * 0.1, 100)
+
+	def getPrice(self):
+		return self.getBasePrice()-self.getQuantityDiscount()+self.getShipping() 
 
 
 def main():
-	p = Product(100,5.6)
+	p = Product(600,5.6)
 	print(p.getPrice())
 
 
